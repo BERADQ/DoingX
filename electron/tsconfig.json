@@ -1,0 +1,7 @@
+{
+  "extends": "@tsconfig/node18",
+  "compilerOptions": {
+    "module": "CommonJS"
+  },
+  "include": ["src/**/*.cts", "src/**/*.ts", "src/**/*.js"]
+}

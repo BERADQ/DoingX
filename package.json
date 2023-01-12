@@ -1,0 +1,34 @@
+{
+  "name": "doing-x",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "start": "cd electron & tsc & yarn start",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^2.0.0",
+    "@tsconfig/node18": "^1.0.1",
+    "@tsconfig/svelte": "^3.0.0",
+    "@types/electron": "*",
+    "@types/electron-devtools-installer": "*",
+    "@types/electron-notify": "*",
+    "@types/node": "^18.11.18",
+    "@types/postcss-preset-env": "^7.7.0",
+    "electron": "^22.0.1",
+    "postcss": "^8.4.21",
+    "postcss-import": "^15.1.0",
+    "postcss-preset-env": "^7.8.3",
+    "svelte": "^3.54.0",
+    "svelte-check": "^2.10.0",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.3",
+    "vite": "^4.0.0",
+    "minireset.css": "*"
+  }
+}

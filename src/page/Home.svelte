@@ -51,22 +51,13 @@
             & .left .fastQu {
                 grid-area: fastQu;
                 color: #FFEBCD;
-                font-family: SmileySans;
                 font-size: 47px;
                 padding-top: 83px;
                 padding-left: 18px;
-                overflow: hidden;
-                border-radius: var(--mainRadius);
                 background-color: #FF9800;
-                height: 100%;
-                position: relative;
-
                 &::after {
-                    font-family: "iconfont" !important;
-                    position: absolute;
                     bottom: 0;
                     right: -12px;
-                    transform: rotate(12deg);
                     content: "\e65c";
                     font-size: 100px;
                     color: #FFAD33;
@@ -76,22 +67,11 @@
             & .left .lookBack {
                 grid-area: lookBack;
                 color: #89cc8e;
-                font-family: SmileySans;
                 font-size: 30px;
-                padding-top: 50px;
-                padding-left: 12px;
-                overflow: hidden;
-                border-radius: var(--mainRadius);
                 background-color: #E7F4E8;
-                height: 100%;
-                position: relative;
-
                 &::after {
-                    font-family: "iconfont" !important;
-                    position: absolute;
                     bottom: 6px;
                     right: 6px;
-                    transform: rotate(12deg);
                     content: "\e622";
                     font-size: 80px;
                     color: #ceeed0;
@@ -101,25 +81,29 @@
             & .left .backlog {
                 grid-area: backlog;
                 color: #7ab3de;
-                font-family: SmileySans;
                 font-size: 30px;
-                padding-top: 50px;
-                padding-left: 12px;
-                overflow: hidden;
-                border-radius: var(--mainRadius);
                 background-color: #E1F1FD;
-                height: 100%;
-                position: relative;
-
                 &::after {
-                    font-family: "iconfont" !important;
-                    position: absolute;
                     bottom: -13px;
                     right: -3px;
-                    transform: rotate(12deg);
                     content: "\e60a";
                     font-size: 100px;
                     color: #c4def1;
+                }
+            }
+
+            & .left li{
+                font-family: SmileySans;
+                overflow: hidden;
+                height: 100%;
+                position: relative;
+                border-radius: var(--mainRadius);
+                padding-top: 50px;
+                padding-left: 12px;
+                &::after{
+                    font-family: "iconfont" !important;
+                    position: absolute;
+                    transform: rotate(12deg);
                 }
             }
         }

@@ -1,4 +1,4 @@
-<img src="./doing-x.svg" height="190">
+<center><img src="./doing-x.svg" height="190"></center>
 
 
 
@@ -16,7 +16,7 @@
 
 # 这是一个番茄钟
 
-### 是Doing++的非官方移植版
+**是Doing++的非官方移植版**
 
 Doing++ ： 您的生活化效率方案 ， 
 
@@ -40,7 +40,7 @@ Doing++ ： 您的生活化效率方案 ，
 
 # This is a software used to improve work efficiency
 
-### Inspired by the mobile phone software called Doing++
+**Inspired by the mobile phone software called Doing++**
 
 Doing++: Based on theoretical methods such as GTD and tomato working method, you can create easy-to-implave personal time management.
 
@@ -62,7 +62,7 @@ Related open source projects:
 
 # これはあなたの仕事の効率を高めるソフトウェアです
 
-### インスピレーションはDoing++という携帯ソフトから来ています
+**インスピレーションはDoing++という携帯ソフトから来ています**
 
 Doing++：GTDとトマト作業法などの理論的方法に基づいて、簡単に実現できる個人時間管理を作ります。
 

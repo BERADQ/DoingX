@@ -29,6 +29,7 @@
                 margin-left: 6px;
             }
             & span{
+                z-index: 0;
                 font-family: HarmoyOS_Sans;
                 font-weight: bold;
                 display: block;
@@ -42,6 +43,7 @@
                 font-size: 20px;
             }
             & button{
+                z-index: 10;
                 transition: all 200ms;
                 &:hover{
                     border-color:var(--mainColor);

@@ -5,11 +5,21 @@
 		{name: "写作业", color: 0x03A9F4},
 		{name: "读书", color: 0x795548},
 		{name: "慢跑", color: 0x4CAF50},
+		{name: "测试数据 我来测试", color: 0x03A9F4},
+		{name: "尽量写长一点看看有没有BUG", color: 0x795548},
+		{name: "慢跑", color: 0x4CAF50},
+		{name: "写作业", color: 0x03A9F4},
+		{name: "读书", color: 0x795548},
+		{name: "刷视频", color: 0x4CAF50},
+		{name: "长跑", color: 0x4CAF50},
+		{name: "直播", color: 0x03A9F4},
+		{name: "打游戏", color: 0x795548},
+		{name: "吃饭", color: 0x4CAF50},
 	];
 
-	function toHash(num:number):string{
-		return `#${num.toString(16).padStart(6,"0")}`;
-    }
+	function toHash(num: number): string {
+		return `#${num.toString(16).padStart(6, "0")}`;
+	}
 </script>
 
 <div class="home">
@@ -25,7 +35,7 @@
         </ul>
         <ul class="right">
             {#each testDe as item}
-                <li class="st" style="background-color: {toHash(item.color)}"></li>
+                <li class="st cd" style="background-color: {toHash(item.color)}">{item.name}</li>
             {/each}
         </ul>
         <div class="down">
@@ -45,7 +55,7 @@
         & .card-1 {
             height: 100%;
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 550px 1fr;
             grid-template-rows: 250px 1fr;
             grid-template-areas:
                             "left right"
@@ -58,7 +68,9 @@
                 height: 100%;
                 background-color: #fff;
                 border-radius: 12px;
+
                 & .st {
+                    letter-spacing: 1px;
                     font-family: SmileySans;
                     overflow: hidden;
                     height: 100%;
@@ -89,8 +101,28 @@
             }
 
             & .right {
-                grid-area: right;
+                height: unset;
                 display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: flex-start;
+                grid-area: right;
+                padding-top: 8px;
+                padding-left: 8px;
+                flex-wrap: wrap;
+                align-content: flex-start;
+                & .st.cd {
+                    letter-spacing: 2px;
+                    font-family: SourceHan_Sans;
+                    font-weight: bold;
+                    margin-top: 10px;
+                    margin-left: 10px;
+                    padding: 12px;
+                    height: unset;
+                    width: unset;
+                    color: #EEED;
+                    font-size: 16px;
+                }
             }
 
             & .down {

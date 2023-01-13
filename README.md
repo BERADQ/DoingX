@@ -20,6 +20,8 @@ Doing++ ： 您的生活化效率方案 ，
 
 - [鸿蒙OS Sans](https://developer.harmonyos.com/cn/docs/design/des-resources/general-0000001157315901)
 
+- [思源黑体](https://github.com/adobe-fonts/source-han-sans)
+
 
 
 
@@ -40,6 +42,8 @@ Related open source projects:
 
 - [鸿蒙OS Sans](https://developer.harmonyos.com/cn/docs/design/des-resources/general-0000001157315901)
 
+- [Source Han Sans](https://github.com/adobe-fonts/source-han-sans)
+
 
 
 
@@ -59,3 +63,5 @@ Related open source projects:
 - [得意黑](https://github.com/atelier-anchor/smiley-sans)
 
 - [鸿蒙OS Sans](https://developer.harmonyos.com/cn/docs/design/des-resources/general-0000001157315901)
+
+- [源ノ角ゴシック](https://github.com/adobe-fonts/source-han-sans)

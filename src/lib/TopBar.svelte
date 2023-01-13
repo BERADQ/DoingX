@@ -9,7 +9,7 @@
     <div class="bar">
         <img src="{icon}" alt="Doing"><span>Doing X</span>
         <button>&#xe604;</button>
-        <button class="minimize">&#xe605;</button>
+        <button class="minimize" on:click={()=>dispatch('wMin')}>&#xe605;</button>
         <button class="shut" on:click={()=>dispatch('wClose')}>&#xe606;</button>
     </div>
 </div>

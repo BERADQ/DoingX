@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3861953 */
-  src: url('iconfont.woff2?t=1673531730161') format('woff2'),
-       url('iconfont.woff?t=1673531730161') format('woff'),
-       url('iconfont.ttf?t=1673531730161') format('truetype');
+  src: url('iconfont.woff2?t=1673601147406') format('woff2'),
+       url('iconfont.woff?t=1673601147406') format('woff'),
+       url('iconfont.ttf?t=1673601147406') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,50 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-diandengpao:before {
+  content: "\e6bd";
+}
+
+.icon-Tab_shouye:before {
+  content: "\e661";
+}
+
+.icon-time1:before {
+  content: "\e633";
+}
+
+.icon-bulb-fill:before {
+  content: "\eb69";
+}
+
+.icon-camera-GOTO_PRESET:before {
+  content: "\e653";
+}
+
+.icon-reset:before {
+  content: "\e656";
+}
+
+.icon-config:before {
+  content: "\e657";
+}
+
+.icon-down:before {
+  content: "\e655";
+}
+
+.icon-time:before {
+  content: "\e658";
+}
+
+.icon-delete1:before {
+  content: "\e654";
+}
+
+.icon-zone:before {
+  content: "\e65a";
 }
 
 .icon-report:before {

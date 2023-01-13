@@ -4,6 +4,7 @@ declare global {
 		static chrome():string;
 		static electron():string;
 		static closeM():void;
+		static minM():void;
 	}
 }
 

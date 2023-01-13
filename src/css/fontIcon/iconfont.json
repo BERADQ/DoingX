@@ -6,6 +6,83 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "15644322",
+      "name": "电灯泡",
+      "font_class": "diandengpao",
+      "unicode": "e6bd",
+      "unicode_decimal": 59069
+    },
+    {
+      "icon_id": "33080318",
+      "name": "Tab_首页",
+      "font_class": "Tab_shouye",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "1813719",
+      "name": "time-时间",
+      "font_class": "time1",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "19689266",
+      "name": "电灯泡",
+      "font_class": "bulb-fill",
+      "unicode": "eb69",
+      "unicode_decimal": 60265
+    },
+    {
+      "icon_id": "33215978",
+      "name": "camera-GOTO_PRESET",
+      "font_class": "camera-GOTO_PRESET",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "33216022",
+      "name": "reset",
+      "font_class": "reset",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "33216025",
+      "name": "config",
+      "font_class": "config",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "33216027",
+      "name": "down",
+      "font_class": "down",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "33216043",
+      "name": "time",
+      "font_class": "time",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "33216044",
+      "name": "delete",
+      "font_class": "delete1",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "33216109",
+      "name": "zone",
+      "font_class": "zone",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
       "icon_id": "1471607",
       "name": "report",
       "font_class": "report",

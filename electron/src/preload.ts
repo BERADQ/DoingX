@@ -5,4 +5,5 @@ contextBridge.exposeInMainWorld("mainWindow", {
 	chrome: () => process.versions.chrome,
 	electron: () => process.versions.electron,
 	closeM: () => ipcRenderer.invoke('closeM'),
+	minM: () => ipcRenderer.invoke('minM'),
 });

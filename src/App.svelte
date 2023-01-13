@@ -14,13 +14,21 @@
 		setTimeout(mainWindow.closeM, 250);
 		$mainOpacity = 0;
 	};
+	const xMin = () => {
+		setTimeout(()=>{
+			mainWindow.minM();
+			mainOpacity.set(1,{duration:0})
+        }, 200);
+		mainOpacity.set(0,{duration:200});
+	};
+
 </script>
 
 <main>
     <div class="main" style="opacity: {$mainOpacity}">
-        <TopBar on:wClose={xClose}/>
+        <TopBar on:wClose={xClose} on:wMin={xMin}/>
         <div class="window">
-            <LeftBar/>
+            <LeftBar on:tabChange={(e)=>{console.log(e.detail)}}/>
             <div class="home">
                 <Home/>
             </div>

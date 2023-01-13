@@ -1,4 +1,4 @@
-<div style="text-align: center; height: 70px;font-size: 70px;font-family:sans-serif"><img src="./src/assets/DoingX.svg" height="70">DoingX</div>
+<div style="text-align: center; height: 70px;"><img src="./src/assets/DoingX.svg" height="70"><span style="font-size: 70px;font-family:sans-serif;">DoingX</span></div>
 
 
 

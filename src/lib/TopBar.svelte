@@ -1,5 +1,8 @@
 <script lang="ts">
     import icon from "../assets/DoingX.svg"
+    import {createEventDispatcher} from "svelte";
+
+    const dispatch = createEventDispatcher();
 </script>
 
 <div class="main">
@@ -7,7 +10,7 @@
         <img src="{icon}" alt="Doing"><span>Doing X</span>
         <button>&#xe604;</button>
         <button class="minimize">&#xe605;</button>
-        <button class="shut">&#xe606;</button>
+        <button class="shut" on:click={()=>dispatch('wClose')}>&#xe606;</button>
     </div>
 </div>
 

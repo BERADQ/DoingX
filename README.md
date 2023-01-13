@@ -2,7 +2,7 @@
 
 <u>尚未完成</u>
 
-
+---
 
 # 这是一个番茄钟
 
@@ -24,7 +24,7 @@ Doing++ ： 您的生活化效率方案 ，
 
 
 
-
+---
 
 # This is a software used to improve work efficiency
 
@@ -44,7 +44,7 @@ Related open source projects:
 
 
 
-
+---
 
 # これはあなたの仕事の効率を高めるソフトウェアです
 

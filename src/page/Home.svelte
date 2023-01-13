@@ -8,7 +8,7 @@
             <li class="fastQu st">快速专注</li>
             <li class="backlog st">新建待办</li>
             <li class="lookBack st">回顾</li>
-            <li class="durationBar"><Drag/></li>
+            <li class="durationBar"><Drag/><button class="st">开 始</button></li>
         </ul>
         <ul class="right">
         </ul>
@@ -119,7 +119,22 @@
 
                 & .durationBar{
                     grid-area: durationBar;
-
+                    display: flex;
+                    & button{
+                        color: #EEE;
+                        font-size: 18px;
+                        border: 0;
+                        width: 100px;
+                        margin-left: 18px;
+                        background-color: #FFC107;
+                        padding: 0;
+                        &:hover{
+                            transform: scale(108%);
+                        }
+                        &:active{
+                            transform: scale(96%);
+                        }
+                    }
                 }
             }
         }

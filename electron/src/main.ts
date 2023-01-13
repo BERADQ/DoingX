@@ -1,18 +1,23 @@
-import {app, BrowserWindow} from 'electron';
-import pathUtil from 'path'
+import {app, BrowserWindow, ipcMain} from 'electron';
+import pathUtil from 'path';
+
 const createWindow = () => {
 	const win = new BrowserWindow({
 		width: 800,
 		height: 800,
 		frame: false,
-		transparent:true,
-		hasShadow:true,
-		webPreferences:{
-			preload:pathUtil.join(__dirname,'./preload.js')
+		transparent: true,
+		hasShadow: true,
+		webPreferences: {
+			preload: pathUtil.join(__dirname, './preload.js')
 		}
 	});
+	ipcMain.handle("closeM",()=>{
+		win.close();
+	})
 	win.loadURL('http://localhost:5173').then(r => {
-		console.log("ロード完了");});
+		console.log("ロード完了");
+	});
 };
 
 app.whenReady().then(() => {
@@ -23,11 +28,11 @@ app.whenReady().then(() => {
 			app.quit();
 		}
 	});
-	app.on("activate",()=>{
-		if (BrowserWindow.getAllWindows().length === 0){
+	app.on("activate", () => {
+		if (BrowserWindow.getAllWindows().length === 0) {
 			createWindow();
 		}
-	})
+	});
 });
 
 

@@ -3,6 +3,7 @@
 *.ts linguist-language=TypeScript
 *.cts linguist-language=TypeScript
 *.mts linguist-language=TypeScript
-*.js linguist-language=JavaScript
-*.cjs linguist-language=JavaScript
-*.mjs linguist-language=JavaScript
+*.js linguist-language=TypeScript
+*.cjs linguist-language=TypeScript
+*.mjs linguist-language=TypeScript
+*.css linguist-language=PostCSS

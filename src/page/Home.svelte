@@ -2,7 +2,7 @@
 	import Drag from "../lib/Drag.svelte";
 	import axios from "axios";
 	import {flip} from "svelte/animate";
-
+	
 	let testDe = [
 		{name: "写作业", color: 0x03A9F4, id: 1},
 		{name: "读书", color: 0x795548, id: 2},
@@ -20,23 +20,41 @@
 		{name: "吃饭", color: 0x4CAF50, id: 13},
 	];
 	let beLog = [
-		{name: "敲代码1", completed: true, id: 1},
+		{name: "文字写的特别长，越界之后大概会有BUG，这是测试", completed: true, id: 1},
 		{name: "敲代码2", completed: false, id: 2},
 		{name: "敲代码3", completed: false, id: 3},
 		{name: "敲代码4", completed: false, id: 4},
 		{name: "敲代码5", completed: false, id: 5},
-		{name: "敲代码6", completed: false, id: 6},
+		{name: "敲代码6", completed: true, id: 6},
 		{name: "敲代码7", completed: false, id: 7},
-		{name: "敲代码8", completed: false, id: 8},
+		{name: "敲代码8", completed: true, id: 8},
 		{name: "敲代码9", completed: false, id: 9},
 	];
+	beLog.forEach((item, i) => {
+		if (item.completed === true) {
+			beLog.push(...beLog.splice(i, 1));
+		}
+	});
+
+	function finsLog(id: number) {
+		let temp = beLog.splice(beLog.findIndex(item => {
+			return item.id === id;
+		}), 1);
+		if (!temp[0].completed) {
+			temp[0].completed = true;
+			beLog = [...beLog, ...temp];
+		}else {
+			temp[0].completed = false;
+			beLog = [...temp,...beLog];
+        }
+	}
 
 	//const testApi = "https://v1.hitokoto.cn/";
 	// axios.get(testApi, {responseType: "json"}).then(item => {
 	// 	console.log(item);
 	// });
-
-
+	
+	
 	function toHash(num: number): string {
 		return `#${num.toString(16).padStart(6, "0")}`;
 	}
@@ -70,8 +88,17 @@
                 <div class="title"><span class="iconfont icon">&#xe60a;</span> 待办事项</div>
                 <ul>
                     {#each beLog as item (item.id)}
-                        <li class="st beDo"><span
-                                class="iconfont check">{item.completed ? String.fromCharCode(0xe60c) : String.fromCharCode(0xe60b)}</span><span>{item.name}</span>
+                        <li class="st beDo"
+                            tabindex="0"
+                            class:checked={item.completed}
+                            on:click={()=>finsLog(item.id)}
+                            animate:flip={{duration: 250 + beLog.length*10,}}>
+                            <span class="iconfont check">
+                                {item.completed ? String.fromCharCode(0xe60d) : String.fromCharCode(0xe60b)}
+                            </span>
+                            <span class="logName">
+                                {item.name}
+                            </span>
                         </li>
                     {/each}
                 </ul>
@@ -153,7 +180,8 @@
 
             & .down {
                 overflow: auto;
-                padding: 0;
+                padding: 0 0 18px;
+
                 & .one {
                     & .title {
                         padding-left: 18px;
@@ -165,7 +193,7 @@
                         margin-top: 12px;
                         margin-right: 21px;
                         margin-left: 21px;
-                        background-color: #E1F1FD;
+                        background-color: #f5f5f5;
                         font-family: SourceHan_Sans;
                         display: flex;
                         align-items: center;
@@ -173,12 +201,29 @@
                         color: #7AB3DE;
                         font-weight: bold;
                         font-size: 18px;
+                        position: relative;
 
                         & .check {
                             font-size: 20px;
                             color: #C4DEF1;
+                            margin-right: 10px;
+                        }
+
+                        &.checked {
+                            background-color: #ccc;
+                            color: #999;
+
+                            & .check {
+                                color: #aaa;
+                            }
+
+                            & .logName {
+                                text-decoration: line-through 2px;
+                                text-decoration-color: #638DAD;
+                            }
                         }
                     }
+
                 }
             }
 

@@ -46,3 +46,22 @@ html, body {
 #app{
     height: 100%;
 }
+
+::-webkit-scrollbar{
+    width: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #cccc;
+    border-radius: var(--mainRadius);
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color: #aaac;
+}
+
+::-webkit-scrollbar-button{
+    height: var(--mainRadius);
+    width: 0;
+}

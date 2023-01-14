@@ -11,7 +11,9 @@ const createWindow = () => {
 		transparent: true,
 		hasShadow: true,
 		webPreferences: {
-			preload: pathUtil.join(__dirname, './preload.js')
+			preload: pathUtil.join(__dirname, './preload.js'),
+			scrollBounce:true,
+			webSecurity:false
 		}
 	});
 	

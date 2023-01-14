@@ -1,21 +1,41 @@
 <script lang="ts">
 	import Drag from "../lib/Drag.svelte";
+	import axios from "axios";
+	import {flip} from "svelte/animate";
 
-	const testDe = [
-		{name: "写作业", color: 0x03A9F4},
-		{name: "读书", color: 0x795548},
-		{name: "慢跑", color: 0x4CAF50},
-		{name: "测试数据 我来测试", color: 0x03A9F4},
-		{name: "尽量写长一点看看有没有BUG", color: 0x795548},
-		{name: "慢跑", color: 0x4CAF50},
-		{name: "写作业", color: 0x03A9F4},
-		{name: "读书", color: 0x795548},
-		{name: "刷视频", color: 0x4CAF50},
-		{name: "长跑", color: 0x4CAF50},
-		{name: "直播", color: 0x03A9F4},
-		{name: "打游戏", color: 0x795548},
-		{name: "吃饭", color: 0x4CAF50},
+	let testDe = [
+		{name: "写作业", color: 0x03A9F4, id: 1},
+		{name: "读书", color: 0x795548, id: 2},
+		{name: "找BUG", color: 0x4CAF50, id: 3},
+		{name: "测试数据 我来测试", color: 0x03A9F4, id: 4},
+		{name: "尽量写长一点看看有没有BUG", color: 0x795548, id: 5},
+		{name: "希望没有BUG", color: 0x03A9F4, id: 14},
+		{name: "敲代码", color: 0x4CAF50, id: 6},
+		{name: "写作业", color: 0x03A9F4, id: 7},
+		{name: "读书", color: 0x795548, id: 8},
+		{name: "刷视频", color: 0x4CAF50, id: 9},
+		{name: "长跑", color: 0x4CAF50, id: 10},
+		{name: "直播", color: 0x03A9F4, id: 11},
+		{name: "打游戏", color: 0x795548, id: 12},
+		{name: "吃饭", color: 0x4CAF50, id: 13},
 	];
+	let beLog = [
+		{name: "敲代码1", completed: true, id: 1},
+		{name: "敲代码2", completed: false, id: 2},
+		{name: "敲代码3", completed: false, id: 3},
+		{name: "敲代码4", completed: false, id: 4},
+		{name: "敲代码5", completed: false, id: 5},
+		{name: "敲代码6", completed: false, id: 6},
+		{name: "敲代码7", completed: false, id: 7},
+		{name: "敲代码8", completed: false, id: 8},
+		{name: "敲代码9", completed: false, id: 9},
+	];
+
+	//const testApi = "https://v1.hitokoto.cn/";
+	// axios.get(testApi, {responseType: "json"}).then(item => {
+	// 	console.log(item);
+	// });
+
 
 	function toHash(num: number): string {
 		return `#${num.toString(16).padStart(6, "0")}`;
@@ -25,21 +45,37 @@
 <div class="home">
     <div class="card-1">
         <ul class="left">
-            <li class="fastQu st">快速专注</li>
-            <li class="backlog st">新建待办</li>
-            <li class="lookBack st">回顾</li>
+            <li class="fastQu st" tabindex="0">快速专注</li>
+            <li class="backlog st" tabindex="0">新建待办</li>
+            <li class="lookBack st" tabindex="0">回顾</li>
             <li class="durationBar">
                 <Drag/>
                 <button class="st">开 始</button>
             </li>
         </ul>
         <ul class="right">
-            {#each testDe as item}
-                <li class="st cd" style="background-color: {toHash(item.color)}">{item.name}</li>
+            <li class="title"><span class="iconfont icon">&#xe633;</span> 专注模式</li>
+            {#each testDe as item (item.id)}
+                <li
+                        tabindex="0"
+                        class="st cd"
+                        style="background-color: {toHash(item.color)}"
+                        animate:flip={{duration: 250,}}>
+                    {item.name}
+                </li>
             {/each}
         </ul>
         <div class="down">
-
+            <div class="one">
+                <div class="title"><span class="iconfont icon">&#xe60a;</span> 待办事项</div>
+                <ul>
+                    {#each beLog as item (item.id)}
+                        <li class="st beDo"><span
+                                class="iconfont check">{item.completed ? String.fromCharCode(0xe60c) : String.fromCharCode(0xe60b)}</span><span>{item.name}</span>
+                        </li>
+                    {/each}
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -58,8 +94,8 @@
             grid-template-columns: 550px 1fr;
             grid-template-rows: 250px 1fr;
             grid-template-areas:
-                            "left right"
-                            "down right";
+                            "left down"
+                            "right down";
             gap: 18px;
 
             & .left, & .right, & .down {
@@ -67,7 +103,7 @@
                 padding: 18px;
                 height: 100%;
                 background-color: #fff;
-                border-radius: 12px;
+                border-radius: var(--mainRadius);
 
                 & .st {
                     letter-spacing: 1px;
@@ -97,6 +133,52 @@
                         transform: scale(98%);
                         box-shadow: 0 0 6px rgba(33, 33, 33, .3);
                     }
+
+                }
+            }
+
+            & .title {
+                padding-left: 10px;
+                padding-top: 8px;
+                position: sticky;
+                top: 0;
+                box-shadow: 0 8px 5px #fff;
+                background-color: #fff;
+                z-index: 10;
+                color: #FFAD33;
+                font-family: SourceHan_Sans;
+                width: 100%;
+                font-size: 18px;
+            }
+
+            & .down {
+                overflow: auto;
+                padding: 0;
+                & .one {
+                    & .title {
+                        padding-left: 18px;
+                        color: #7AB3DE;
+                    }
+
+                    & .beDo {
+                        padding: 10px;
+                        margin-top: 12px;
+                        margin-right: 21px;
+                        margin-left: 21px;
+                        background-color: #E1F1FD;
+                        font-family: SourceHan_Sans;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        color: #7AB3DE;
+                        font-weight: bold;
+                        font-size: 18px;
+
+                        & .check {
+                            font-size: 20px;
+                            color: #C4DEF1;
+                        }
+                    }
                 }
             }
 
@@ -107,10 +189,26 @@
                 justify-content: flex-start;
                 align-items: flex-start;
                 grid-area: right;
-                padding-top: 8px;
+                padding-top: 0;
                 padding-left: 8px;
+                padding-bottom: 0;
                 flex-wrap: wrap;
                 align-content: flex-start;
+                overflow: auto;
+                position: relative;
+
+                &::after {
+                    background-color: #fff;
+                    content: "";
+                    position: sticky;
+                    height: 10px;
+                    width: 100%;
+                    bottom: 0;
+                    margin-top: 5px;
+                    box-shadow: 0 -4px 5px #fff;
+                }
+
+
                 & .st.cd {
                     letter-spacing: 2px;
                     font-family: SourceHan_Sans;
@@ -122,11 +220,16 @@
                     width: unset;
                     color: #EEED;
                     font-size: 16px;
+
+                    &:active {
+                        transform: scale(96%);
+                    }
                 }
             }
 
             & .down {
                 grid-area: down;
+                padding-top: 0;
             }
 
             & .left {

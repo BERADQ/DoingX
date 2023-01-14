@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "33785304",
+      "name": "选择了",
+      "font_class": "weixuaned",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "33785223",
+      "name": "选择框",
+      "font_class": "weixuan",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
       "icon_id": "15644322",
       "name": "电灯泡",
       "font_class": "diandengpao",

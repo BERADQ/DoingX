@@ -6,7 +6,7 @@ const createWindow = () => {
 		width: 940,
 		minWidth:940,
 		height: 560,
-		minHeight:360,
+		minHeight:490,
 		frame: false,
 		transparent: true,
 		hasShadow: true,

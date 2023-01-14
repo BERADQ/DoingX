@@ -3,7 +3,7 @@
 
 	let checkedItem: string = "a";
 	const dispatch = createEventDispatcher();
-    $:dispatch("tabChange",checkedItem)
+	$:dispatch("tabChange", checkedItem);
 </script>
 
 <div class="main">
@@ -60,10 +60,31 @@
                 width: 33px;
                 height: 33px;
                 background-color: #EFEFEF;
-                border-radius: 10px;
+                border-radius: var(--mainRadius);
                 transition: all 250ms;
                 position: relative;
                 overflow: hidden;
+
+                &.a {
+                    --ltTitColor: #e59700;
+                    --ltBgColor: #fff4d3;
+                }
+                &.b {
+                    --ltTitColor: #e59700;
+                    --ltBgColor: #fff4d3;
+                }
+                &.c {
+                    --ltTitColor: #7AB3DE;
+                    --ltBgColor: #E1F1FD;
+                }
+                &.d {
+                    --ltTitColor: #89CC8E;
+                    --ltBgColor: #E7F4E8;
+                }
+                &.e {
+                    --ltTitColor: #333;
+                    --ltBgColor: #ddd;
+                }
 
                 &:first-child {
                     margin-top: 0;
@@ -100,23 +121,25 @@
                     bottom: 8px;
                     left: 4px;
                     width: 3px;
-                    background-color: var(--mainColor);
+                    background-color: transparent;
                     border-radius: 3px;
-                    opacity: 0;
                 }
 
                 &.checked {
-                    background-color: #fff4d3;
+                    background-color: var(--ltBgColor);
                     height: 88px;
+
                     & span {
-                        color: var(--mainColor);
+                        color: var(--ltTitColor);
                         margin-left: 4px;
                     }
-                    & .myIcon{
+
+                    & .myIcon {
                         margin-top: unset;
                     }
+
                     &::before {
-                        opacity: 1;
+                        background-color: var(--ltTitColor);
                     }
                 }
 

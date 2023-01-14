@@ -18,7 +18,7 @@
 	const hMove = (evt: MouseEvent) => {
 		const {left, right} = tClient;
 		let movementX: number = (evt.clientX - left) / ((right) - (left));
-		time = Math.min(Math.max(Math.round((maxTime) * movementX),minTime),maxTime);
+		time = Math.min(Math.max(Math.round((maxTime) * movementX), minTime), maxTime);
 
 		console.log(movementX);
 	};
@@ -39,12 +39,34 @@
 		window.removeEventListener("mouseup", hUp);
 		isHover = false;
 	}
+
+	function keyUp(e: KeyboardEvent) {
+		if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+			time = Math.min(time + 1, maxTime);
+		} else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+			time = Math.max(time - 1, minTime);
+		}
+	}
+
+	function mouseWheel(e: WheelEvent) {
+		if (e.deltaY < 0) {
+			time = Math.min(time + 1, maxTime);
+		} else if (e.deltaY > 0) {
+			time = Math.max(time - 1, minTime);
+		}
+	}
 </script>
 
 <div class="main">
-    <div class="back" bind:clientWidth={barWidth} on:mousedown={hDown} class:hover={isHover}>
+    <div class="back"
+         bind:clientWidth={barWidth}
+         on:mousedown={hDown}
+         class:hover={isHover}
+         on:keyup={keyUp}
+         on:mousewheel={mouseWheel}
+         tabindex="0">
         <div class="mainBar" style="width: {$timeWidth}px;">
-            <span class="num inbox" class:sm={time<15}>{time}</span>
+            <span class="num inbox" class:sm={time<21}>{time}</span>
         </div>
     </div>
 </div>

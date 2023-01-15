@@ -14,7 +14,7 @@ const createWindow = () => {
 			preload: pathUtil.join(__dirname, './preload.js'),
 			scrollBounce: true,
 			webSecurity: false,
-			zoomFactor: 3.0,
+			zoomFactor: 1.0,
 		}
 	});
 	

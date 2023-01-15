@@ -4,16 +4,17 @@ import pathUtil from 'path';
 const createWindow = () => {
 	const win = new BrowserWindow({
 		width: 940,
-		minWidth:940,
+		minWidth: 940,
 		height: 560,
-		minHeight:490,
+		minHeight: 490,
 		frame: false,
-		transparent: true,
+		transparent: false,
 		hasShadow: true,
 		webPreferences: {
 			preload: pathUtil.join(__dirname, './preload.js'),
-			scrollBounce:true,
-			webSecurity:false
+			scrollBounce: true,
+			webSecurity: false,
+			zoomFactor: 3.0,
 		}
 	});
 	
@@ -21,9 +22,9 @@ const createWindow = () => {
 	ipcMain.handle("closeM", () => {
 		win.close();
 	});
-	ipcMain.handle('minM', function() {
+	ipcMain.handle('minM', function () {
 		win.minimize();
-	})
+	});
 	
 	
 	win.loadURL('http://localhost:5173').then(r => {

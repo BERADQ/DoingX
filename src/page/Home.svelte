@@ -2,6 +2,8 @@
 	import Drag from "../lib/Drag.svelte";
 	import axios from "axios";
 	import {flip} from "svelte/animate";
+	import {BackLog} from "../tsd";
+	import {fade} from "svelte/transition";
 	
 	let testDe = [
 		{name: "写作业", color: 0x03A9F4, id: 1},
@@ -19,34 +21,56 @@
 		{name: "打游戏", color: 0x795548, id: 12},
 		{name: "吃饭", color: 0x4CAF50, id: 13},
 	];
-	let beLog = [
-		{name: "文字写的特别长，越界之后大概会有BUG，这是测试", completed: true, id: 1},
-		{name: "敲代码2", completed: false, id: 2},
-		{name: "敲代码3", completed: false, id: 3},
-		{name: "敲代码4", completed: false, id: 4},
-		{name: "敲代码5", completed: false, id: 5},
-		{name: "敲代码6", completed: true, id: 6},
-		{name: "敲代码7", completed: false, id: 7},
-		{name: "敲代码8", completed: true, id: 8},
-		{name: "敲代码9", completed: false, id: 9},
-	];
-	beLog.forEach((item, i) => {
-		if (item.completed === true) {
-			beLog.push(...beLog.splice(i, 1));
-		}
-	});
 
-	function finsLog(id: number) {
-		let temp = beLog.splice(beLog.findIndex(item => {
-			return item.id === id;
-		}), 1);
-		if (!temp[0].completed) {
-			temp[0].completed = true;
-			beLog = [...beLog, ...temp];
-		}else {
-			temp[0].completed = false;
-			beLog = [...temp,...beLog];
-        }
+	let beLog: BackLog[] = [
+		BackLog.from({logRepeat: "day", logName: "这是每日重复backlog测试01"}),
+		BackLog.from({logRepeat: "day", logName: "这是每日重复backlog测试02"}),
+		BackLog.from({logRepeat: "month", logName: "这是每月重复backlog测试01"}),
+		BackLog.from({logRepeat: "none", logName: "这是无重复backlog测试01"}),
+		BackLog.from({logRepeat: "none", logName: "这是无重复backlog测试02"}),
+		BackLog.from({logRepeat: "none", logName: "这是无重复backlog测试03"}),
+		BackLog.from({logRepeat: "none", logName: "这是无重复backlog测试04"}),
+	];
+	console.log(beLog);
+
+	function reLis() {
+		beLog.forEach((item, i) => {
+			if (item.isCompleted === true) {
+				beLog.push(...beLog.splice(i, 1));
+			}
+		});
+	}
+
+	reLis();
+
+	function finsLog(fp: BackLog) {
+		let item = beLog.find((se) => {
+			return fp.logUUID === se.logUUID;
+		});
+		let index = beLog.findIndex((se) => {
+			return se.logUUID === item.logUUID;
+		});
+		beLog.forEach((x, i) => {
+			if (x.inheritUUID && x.inheritUUID === item.logUUID) {
+				beLog.splice(i, 1);
+				//console.log(x);
+			}
+		});
+		if (item.inheritUUID && item.isCompleted === true) {
+			beLog.forEach(value => {
+				if (value.logUUID === item.inheritUUID) {
+					value.unitBacktracking();
+					beLog.splice(index, 1);
+				}
+			});
+		}
+		let temp = item.setCompleted();
+		if (temp) {
+			beLog.splice(index, 0, temp);
+		}
+		beLog = beLog;
+
+		console.log(beLog);
 	}
 
 	//const testApi = "https://v1.hitokoto.cn/";
@@ -57,6 +81,19 @@
 	
 	function toHash(num: number): string {
 		return `#${num.toString(16).padStart(6, "0")}`;
+	}
+
+	function formatTheDate(time: number): string {
+		let temp = new Date(time);
+		return `${temp.getMonth() + 1}-${temp.getDate()}`;
+	}
+	
+	function getDis(item: BackLog): boolean {
+		let itemDate = new Date(item.logStarTime);
+		let now = new Date();
+		return itemDate.getDate() <= now.getDate()
+			&& itemDate.getMonth() <= now.getMonth()
+			&& itemDate.getFullYear() <= now.getFullYear();
 	}
 </script>
 
@@ -85,19 +122,24 @@
         </ul>
         <div class="down">
             <div class="one">
-                <div class="title"><span class="iconfont icon">&#xe60a;</span> 待办事项</div>
+                <div class="title"><span class="iconfont icon">&#xe60a;</span> 当日待办</div>
                 <ul>
-                    {#each beLog as item (item.id)}
+                    {#each beLog.filter(se => getDis(se)) as item,i (item.logUUID)}
                         <li class="st beDo"
                             tabindex="0"
-                            class:checked={item.completed}
-                            on:click={()=>finsLog(item.id)}
+                            class:checked={item.isCompleted}
+                            on:click={()=>{finsLog(item,i)}}
                             animate:flip={{duration: 250 + beLog.length*10,}}>
                             <span class="iconfont check">
-                                {item.completed ? String.fromCharCode(0xe60d) : String.fromCharCode(0xe60b)}
+                                {item.isCompleted ? String.fromCharCode(0xe60d) : String.fromCharCode(0xe60b)}
                             </span>
                             <span class="logName">
-                                {item.name}
+                                <span class="logDate">{formatTheDate(item.logStarTime)}</span>
+                                事项名称：{item.logName}
+                                <br>
+                                当前事项UUID：{item.logUUID}
+                                <br>
+                                事项继承UUID：{item.inheritUUID}
                             </span>
                         </li>
                     {/each}
@@ -183,6 +225,8 @@
                 padding: 0 0 18px;
 
                 & .one {
+                    transition: all 250ms;
+
                     & .title {
                         padding-left: 18px;
                         color: #7AB3DE;
@@ -201,7 +245,7 @@
                         color: #7AB3DE;
                         font-weight: bold;
                         font-size: 18px;
-                        position: relative;
+                        position: unset;
 
                         & .check {
                             font-size: 20px;
@@ -209,11 +253,21 @@
                             margin-right: 10px;
                         }
 
+                        & .logDate {
+                            font-size: 18px;
+                            color: #C4DEF1;
+                            font-weight: normal;
+                        }
+
                         &.checked {
                             background-color: #ccc;
                             color: #999;
 
                             & .check {
+                                color: #aaa;
+                            }
+
+                            & .logDate {
                                 color: #aaa;
                             }
 

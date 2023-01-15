@@ -1,7 +1,6 @@
 <script lang="ts">
     import icon from "../assets/DoingX.svg"
     import {createEventDispatcher} from "svelte";
-
     const dispatch = createEventDispatcher();
 </script>
 
@@ -17,12 +16,13 @@
 <style lang="postcss">
     .main, .bar {
         width: 100%;
+        background-color: transparent;
+        transition: background-color 350ms;
     }
     .main{
         -webkit-app-region: drag;
         & .bar{
             height: var(--wBorder);
-            background-color: #fff;
             display: flex;
             justify-content: right;
             align-items: center;
@@ -49,7 +49,6 @@
                 z-index: 10;
                 transition: all 200ms;
                 &:hover{
-                    border-color:var(--mainColor);
                     box-shadow: 0 0 3px rgba(33,33,33,.2);
                     transform: scale(107%);
                 }
@@ -71,13 +70,13 @@
                 -webkit-app-region: none;
                 font-family: "iconfont" !important;
                 font-size: 16px;
-                color: #999;
-                border: 1px #DDD solid;
+                color: #2229;
+                border: 1px #dededece solid;
                 border-radius: 6px;
                 height: 30px;
                 width: 30px;
                 margin-right: 10px;
-                background-color: #fff;
+                background-color: #fff6;
             }
         }
     }

@@ -9,18 +9,17 @@
 	let isHover = false;
 
 	let barWidth: number;
+
 	const timeWidth = tweened((((barWidth - 20) * (time - minTime) / (maxTime - minTime)) + 20) >> 0, {
-		duration: 200,
+		duration: 250,
 		easing: cubicOut
 	});
 
-	$: $timeWidth = (((barWidth - 20) * (time - minTime) / (maxTime - minTime)) + 20) >> 0;
 	const hMove = (evt: MouseEvent) => {
 		const {left, right} = tClient;
 		let movementX: number = (evt.clientX - left) / ((right) - (left));
 		time = Math.min(Math.max(Math.round((maxTime) * movementX), minTime), maxTime);
-
-		console.log(movementX);
+		//console.log(movementX);
 	};
 	let tClient: DOMRect;
 
@@ -55,6 +54,8 @@
 			time = Math.max(time - 1, minTime);
 		}
 	}
+
+	$: timeWidth.set((((barWidth - 20) * (time - minTime) / (maxTime - minTime)) + 20) >> 0);
 </script>
 
 <div class="main">

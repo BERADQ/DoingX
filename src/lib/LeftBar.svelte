@@ -37,8 +37,8 @@
         -webkit-app-region: drag;
         height: 100%;
         width: var(--wBorder);
-        background-color: #fff;
-
+        background-color: transparent;
+        z-index: 10;
         & .table {
             display: flex;
             -webkit-app-region: none;
@@ -46,7 +46,6 @@
             justify-content: flex-start;
             align-items: center;
             height: 490px;
-
             & .in {
                 padding: 10px 0;
 
@@ -60,7 +59,7 @@
                 margin: 6px;
                 width: 33px;
                 height: 33px;
-                background-color: #EFEFEF;
+                background-color: #33333331;
                 border-radius: var(--mainRadius);
                 transition: all 250ms;
                 position: relative;
@@ -71,8 +70,8 @@
                     --ltBgColor: #fff4d3;
                 }
                 &.b {
-                    --ltTitColor: #e59700;
-                    --ltBgColor: #fff4d3;
+                    --ltTitColor: #e3666c;
+                    --ltBgColor: #f8d6dd;
                 }
                 &.c {
                     --ltTitColor: #7AB3DE;

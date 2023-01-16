@@ -1,9 +1,7 @@
 <script lang="ts">
 	import Drag from "../lib/Drag.svelte";
-	import axios from "axios";
 	import {flip} from "svelte/animate";
 	import {BackLog} from "../tsd";
-	import {fade} from "svelte/transition";
 	
 	let testDe = [
 		{name: "写作业", color: 0x03A9F4, id: 1},
@@ -69,8 +67,7 @@
 			beLog.splice(index, 0, temp);
 		}
 		beLog = beLog;
-
-		console.log(beLog);
+		//console.log(beLog);
 	}
 
 	//const testApi = "https://v1.hitokoto.cn/";
@@ -100,12 +97,12 @@
 <div class="home">
     <div class="card-1">
         <ul class="left">
-            <li class="fastQu st" tabindex="0">快速专注</li>
-            <li class="backlog st" tabindex="0">新建待办</li>
-            <li class="lookBack st" tabindex="0">回顾</li>
+            <li class="fastQu ft-st" tabindex="0">快速专注</li>
+            <li class="backlog ft-st" tabindex="0">新建待办</li>
+            <li class="lookBack ft-st" tabindex="0">回顾</li>
             <li class="durationBar">
                 <Drag/>
-                <button class="st">开 始</button>
+                <button class="ft-st">开 始</button>
             </li>
         </ul>
         <ul class="right">
@@ -113,7 +110,7 @@
             {#each testDe as item (item.id)}
                 <li
                         tabindex="0"
-                        class="st cd"
+                        class="ft-st cd"
                         style="background-color: {toHash(item.color)}"
                         animate:flip={{duration: 250,}}>
                     {item.name}
@@ -125,21 +122,18 @@
                 <div class="title"><span class="iconfont icon">&#xe60a;</span> 当日待办</div>
                 <ul>
                     {#each beLog.filter(se => getDis(se)) as item,i (item.logUUID)}
-                        <li class="st beDo"
+                        <li class="ft-st beDo"
                             tabindex="0"
                             class:checked={item.isCompleted}
-                            on:click={()=>{finsLog(item,i)}}
+                            on:click={()=>{finsLog(item)}}
+                            on:keyup={(e)=>{if (e.key==="Enter") finsLog(item);}}
                             animate:flip={{duration: 250 + beLog.length*10,}}>
                             <span class="iconfont check">
                                 {item.isCompleted ? String.fromCharCode(0xe60d) : String.fromCharCode(0xe60b)}
                             </span>
                             <span class="logName">
                                 <span class="logDate">{formatTheDate(item.logStarTime)}</span>
-                                事项名称：{item.logName}
-                                <br>
-                                当前事项UUID：{item.logUUID}
-                                <br>
-                                事项继承UUID：{item.inheritUUID}
+                                {item.logName}
                             </span>
                         </li>
                     {/each}
@@ -173,37 +167,6 @@
                 height: 100%;
                 background-color: #fff;
                 border-radius: var(--mainRadius);
-
-                & .st {
-                    letter-spacing: 1px;
-                    font-family: SmileySans;
-                    overflow: hidden;
-                    height: 100%;
-                    position: relative;
-                    border-radius: var(--mainRadius);
-                    padding-top: 50px;
-                    padding-left: 12px;
-                    transition: all 180ms;
-                    box-shadow: 0 0 3px rgba(33, 33, 33, .3);
-
-                    &::after {
-                        font-family: "iconfont" !important;
-                        position: absolute;
-                        transform: rotate(12deg);
-                    }
-
-                    &:hover {
-                        transform: scale(102%);
-                        box-shadow: 0 0 12px rgba(33, 33, 33, .3);
-                    }
-
-                    &:active {
-                        transition: all 160ms;
-                        transform: scale(98%);
-                        box-shadow: 0 0 6px rgba(33, 33, 33, .3);
-                    }
-
-                }
             }
 
             & .title {
@@ -305,24 +268,6 @@
                     bottom: 0;
                     margin-top: 5px;
                     box-shadow: 0 -4px 5px #fff;
-                }
-
-
-                & .st.cd {
-                    letter-spacing: 2px;
-                    font-family: SourceHan_Sans;
-                    font-weight: bold;
-                    margin-top: 10px;
-                    margin-left: 10px;
-                    padding: 12px;
-                    height: unset;
-                    width: unset;
-                    color: #EEED;
-                    font-size: 16px;
-
-                    &:active {
-                        transform: scale(96%);
-                    }
                 }
             }
 

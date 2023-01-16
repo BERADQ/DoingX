@@ -1,12 +1,14 @@
 import {app, BrowserWindow, ipcMain} from 'electron';
 import pathUtil from 'path';
 
+const initializeScaling = 1.25;
+
 const createWindow = () => {
 	const win = new BrowserWindow({
-		width: 940 * 1.5,
-		minWidth: 940 * 1.5,
-		height: 560 * 1.5,
-		minHeight: 490 * 1.5,
+		width: (940 * initializeScaling) << 0,
+		minWidth: (940 * initializeScaling) << 0,
+		height: (560 * initializeScaling) << 0,
+		minHeight: (490 * initializeScaling) << 0,
 		frame: false,
 		transparent: true,
 		hasShadow: true,
@@ -14,11 +16,9 @@ const createWindow = () => {
 			preload: pathUtil.join(__dirname, './preload.js'),
 			scrollBounce: true,
 			webSecurity: false,
-			zoomFactor: 1.5,
+			zoomFactor: initializeScaling,
 		}
 	});
-	
-	
 	ipcMain.handle("closeM", () => {
 		win.close();
 	});
@@ -29,6 +29,12 @@ const createWindow = () => {
 	
 	win.loadURL('http://localhost:5173').then(r => {
 		console.log("ロード完了");
+	});
+	
+	
+	win.webContents.on("did-finish-load", () => {
+		win.webContents.setZoomFactor(initializeScaling);
+		//win.webContents.setZoomLevel(initializeScaling ** (1 / 1.2));
 	});
 	// win.loadFile('./index.html').then(r => {
 	// 	console.log("ロード完了");

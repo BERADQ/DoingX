@@ -45,6 +45,7 @@
 		} else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
 			time = Math.max(time - 1, minTime);
 		}
+		console.log(e);
 	}
 
 	function mouseWheel(e: WheelEvent) {

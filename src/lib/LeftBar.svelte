@@ -41,14 +41,13 @@
         z-index: 10;
         & .table {
             display: flex;
-            -webkit-app-region: none;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
             height: 490px;
             & .in {
+                -webkit-app-region: none;
                 padding: 10px 0;
-
                 display: flex;
                 flex-direction: column;
                 align-items: center;

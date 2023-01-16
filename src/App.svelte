@@ -5,8 +5,7 @@
 	import Focus from "./page/Focus.svelte";
 	import {tweened} from "svelte/motion";
 	import {quintOut} from "svelte/easing";
-	import {fade} from "svelte/transition";
-	import {onMount} from "svelte";
+	import {fade, fly} from "svelte/transition";
 
 	const mainOpacity = tweened(1, {
 		duration: 250,
@@ -33,13 +32,15 @@
     <div class="main" style="opacity: {$mainOpacity}">
         <TopBar on:wClose={xClose} on:wMin={xMin}/>
         <div class="window">
-            <LeftBar on:tabChange={(e)=>{nowPage=e.detail}}/>
+            <div class="leftBar">
+                <LeftBar on:tabChange={(e)=>{nowPage=e.detail}}/>
+            </div>
             {#if nowPage === "a"}
-                <div class="home" transition:fade={{duration: 250}}>
+                <div class="home" in:fly={{duration:250,y:24,delay:50}} out:fade={{duration:250,opacity:.3}}>
                     <Home/>
                 </div>
             {:else if nowPage === "b"}
-                <div class="focus" transition:fade={{duration: 250}}>
+                <div class="focus" in:fly={{duration:250,y:24,delay:50}} out:fade={{duration:250,opacity:.3}}>
                     <Focus/>
                 </div>
             {/if}
@@ -70,16 +71,26 @@
         width: 100%;
         height: var(--mHeight);
         display: flex;
+        position: relative;
+
+        & .leftBar {
+            z-index: 10;
+        }
 
         & .home {
-            margin-right: 3px;
-            margin-bottom: 3px;
-            width: 100%;
+            position: absolute;
+            left: 45px;
+            right: 3px;
+            bottom: 3px;
+            top: 0px;
         }
 
         & .focus {
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            left: 45px;
+            right: 3px;
+            bottom: 3px;
+            top: 0px;
         }
     }
 </style>

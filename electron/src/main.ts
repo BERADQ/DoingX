@@ -3,10 +3,10 @@ import pathUtil from 'path';
 
 const createWindow = () => {
 	const win = new BrowserWindow({
-		width: 940,
-		minWidth: 940,
-		height: 560,
-		minHeight: 490,
+		width: 940 * 1.5,
+		minWidth: 940 * 1.5,
+		height: 560 * 1.5,
+		minHeight: 490 * 1.5,
 		frame: false,
 		transparent: true,
 		hasShadow: true,
@@ -14,7 +14,7 @@ const createWindow = () => {
 			preload: pathUtil.join(__dirname, './preload.js'),
 			scrollBounce: true,
 			webSecurity: false,
-			zoomFactor: 1.0,
+			zoomFactor: 1.5,
 		}
 	});
 	

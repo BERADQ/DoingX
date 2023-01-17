@@ -1,7 +1,7 @@
 import {app, BrowserWindow, ipcMain} from 'electron';
 import pathUtil from 'path';
 
-const initializeScaling = 1.25;
+const initializeScaling = 1;
 
 const createWindow = () => {
 	const win = new BrowserWindow({

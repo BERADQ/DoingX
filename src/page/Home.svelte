@@ -2,23 +2,7 @@
 	import Drag from "../lib/Drag.svelte";
 	import {flip} from "svelte/animate";
 	import {BackLog} from "../tsd";
-	
-	let testDe = [
-		{name: "写作业", color: 0x03A9F4, id: 1},
-		{name: "读书", color: 0x795548, id: 2},
-		{name: "找BUG", color: 0x4CAF50, id: 3},
-		{name: "测试数据 我来测试", color: 0x03A9F4, id: 4},
-		{name: "尽量写长一点看看有没有BUG", color: 0x795548, id: 5},
-		{name: "希望没有BUG", color: 0x03A9F4, id: 14},
-		{name: "敲代码", color: 0x4CAF50, id: 6},
-		{name: "写作业", color: 0x03A9F4, id: 7},
-		{name: "读书", color: 0x795548, id: 8},
-		{name: "刷视频", color: 0x4CAF50, id: 9},
-		{name: "长跑", color: 0x4CAF50, id: 10},
-		{name: "直播", color: 0x03A9F4, id: 11},
-		{name: "打游戏", color: 0x795548, id: 12},
-		{name: "吃饭", color: 0x4CAF50, id: 13},
-	];
+	import {focus} from "../dataProcessing/focusMode";
 
 	let beLog: BackLog[] = [
 		BackLog.from({logRepeat: "day", logName: "这是每日重复backlog测试01"}),
@@ -74,11 +58,7 @@
 	// axios.get(testApi, {responseType: "json"}).then(item => {
 	// 	console.log(item);
 	// });
-	
-	
-	function toHash(num: number): string {
-		return `#${num.toString(16).padStart(6, "0")}`;
-	}
+
 
 	function formatTheDate(time: number): string {
 		let temp = new Date(time);
@@ -107,11 +87,11 @@
         </ul>
         <ul class="right">
             <li class="title"><span class="iconfont icon">&#xe633;</span> 专注模式</li>
-            {#each testDe as item (item.id)}
+            {#each $focus as item (item.id)}
                 <li
                         tabindex="0"
                         class="ft-st cd"
-                        style="background-color: {toHash(item.color)}"
+                        style="background-color: {item.color}"
                         animate:flip={{duration: 250,}}>
                     {item.name}
                 </li>

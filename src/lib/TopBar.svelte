@@ -1,7 +1,8 @@
 <script lang="ts">
-    import icon from "../assets/DoingX.svg"
-    import {createEventDispatcher} from "svelte";
-    const dispatch = createEventDispatcher();
+	import icon from "../assets/DoingX.svg";
+	import {createEventDispatcher} from "svelte";
+
+	const dispatch = createEventDispatcher();
 </script>
 
 <div class="main">
@@ -20,14 +21,17 @@
         transition: background-color 350ms;
     }
     .main{
+        z-index: 1000;
         -webkit-app-region: drag;
-        & .bar{
+
+        & .bar {
             height: var(--wBorder);
             display: flex;
             justify-content: right;
             align-items: center;
             position: relative;
-            & img{
+
+            & img {
                 margin-right: auto;
                 margin-left: 6px;
             }
@@ -45,18 +49,21 @@
                 color: #FFBA32;
                 font-size: 20px;
             }
-            & button{
-                z-index: 10;
+            & button {
+                z-index: 1000;
                 transition: all 200ms;
-                &:hover{
-                    box-shadow: 0 0 3px rgba(33,33,33,.2);
+
+                &:hover {
+                    box-shadow: 0 0 3px rgba(33, 33, 33, .2);
                     transform: scale(107%);
                 }
-                &.shut:active{
+
+                &.shut:active {
                     background-color: #ff8181;
                     border-color: #990055;
                 }
-                &.minimize:active{
+
+                &.minimize:active {
                     background-color: #90bcff;
                     border-color: #0086b3;
                 }

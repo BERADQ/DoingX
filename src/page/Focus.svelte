@@ -1,35 +1,27 @@
 <script lang="ts">
 	import {flip} from "svelte/animate";
 	import {fade} from "svelte/transition";
-	import {spring} from 'svelte/motion';
+	import {spring, tweened} from 'svelte/motion';
 	import {cubicOut} from "svelte/easing";
+	import {focus} from "../dataProcessing/focusMode";
+	import {onMount} from "svelte";
 
+	onMount(() => {
+		return focus.subscribe(value => {
+			console.log(value);
+		});
+	});
+
+	const bigRound = tweened(0, {
+		duration: 400,
+		easing: cubicOut
+	});
 	let coords;
 
-	let testDe = [
-		{name: "写作业", color: 0x03A9F4, id: 1},
-		{name: "读书", color: 0x795548, id: 2},
-		{name: "找BUG", color: 0x4CAF50, id: 3},
-		{name: "测试数据 我来测试", color: 0x03A9F4, id: 4},
-		{name: "尽量写长一点看看有没有BUG", color: 0x795548, id: 5},
-		{name: "希望没有BUG", color: 0x03A9F4, id: 14},
-		{name: "敲代码", color: 0x4CAF50, id: 6},
-		{name: "写作业", color: 0x03A9F4, id: 7},
-		{name: "读书", color: 0x795548, id: 8},
-		{name: "刷视频", color: 0x4CAF50, id: 9},
-		{name: "长跑", color: 0x4CAF50, id: 10},
-		{name: "直播", color: 0x03A9F4, id: 11},
-		{name: "打游戏", color: 0x795548, id: 12},
-		{name: "吃饭", color: 0x4CAF50, id: 13},
-	];
+	let contentAer: HTMLUListElement;
 
 	let beDrag = [];
 	let beDragID: any;
-
-	function toHash(num: number): string {
-		//console.log(num);
-		return `#${num.toString(16).padStart(6, "0")}`;
-	}
 
 	let tempAniIn: Function = fade;
 
@@ -45,7 +37,7 @@
 			if (!isDrag && Math.abs(em.movementX) + Math.abs(em.movementY) > 2) {
 				beDragID = id;
 				isDrag = true;
-				const tempitem = testDe.splice(index, 1)[0];
+				const tempitem = $focus.splice(index, 1)[0];
 				tempAniIn = (node, {duration}) => {
 					return {
 						duration,
@@ -62,8 +54,8 @@
 				};
 				beDrag.push(tempitem);
 				//console.log(beDrag);
-				testDe = testDe;
 				beDrag = beDrag;
+				$focus = $focus;
 			}
 			if (isDrag) {
 				coords.set({x: em.clientX, y: em.clientY});
@@ -73,9 +65,9 @@
 		const letGo = () => {
 
 			if (isDrag && beDrag.length) {
-				testDe.splice(index, 0, beDrag.splice(0, 1)[0]);
-				testDe = testDe;
+				$focus.splice(index, 0, beDrag.splice(0, 1)[0]);
 				beDrag = beDrag;
+				$focus = $focus;
 			}
 			beDragID = null;
 
@@ -87,41 +79,82 @@
 
 	function del() {
 		if (beDrag.length) {
-			console.log(beDrag[0]);
 			beDrag.pop();
 		}
 	}
+
+	let letGoOfThePosition: { x: number, y: number } = {x: 0, y: 0};
+	let focusOnColor: string;
+
+	function open(e: MouseEvent) {
+		if (beDrag.length) {
+			console.log(beDrag[0]);
+			const rect = contentAer.getBoundingClientRect();
+			[letGoOfThePosition.x, letGoOfThePosition.y] = [100, e.clientY];
+			focusOnGettingStarted = !focusOnGettingStarted;
+			bigRound.set((rect.height ** 2 + rect.width ** 2) ** .5 << 0);
+			focusOnColor = beDrag[0].color;
+			contentAer.style.overflow = "hidden";
+		}
+	}
+
+	let showVerbose: boolean = false;
+	let focusOnGettingStarted: boolean = false;
 </script>
 <div class="main">
     <svg class="render-layers">
         {#each beDrag as item (item.id)}
-            <rect fill="{toHash(item.color)}"
+            <rect fill="{item.color}"
                   x="{$coords.x - 12}"
                   y="{$coords.y - 12}"
                   rx="12"
                   ry="12"
                   class="ball"
-                  in:tempAniIn={{duration: 300}} out:fade={{duration:150}}/>
+                  in:tempAniIn={{duration: 380}}
+                  out:fade={{duration:150}}/>
         {/each}
+        {#if focusOnGettingStarted}
+            <circle
+                    cx="{letGoOfThePosition.x}%"
+                    cy="{letGoOfThePosition.y}"
+                    r="{$bigRound}" fill="{focusOnColor}"/>
+
+        {/if}
     </svg>
     <div class="mainBox">
         <ul class="control">
-            <li class="ft-st cd iconfont add">&#xe601;</li>
-            <li class="ft-st cd iconfont fst">&#xe65c;</li>
-            <li class="ft-st cd iconfont chk">&#xe65a;</li>
-            <li class="ft-st cd iconfont str">&#xe60b;</li>
-            <li class="ft-st cd iconfont gab" on:mouseup={()=>{del()}}>&#xe654;</li>
+            <li class="ft-st cd iconfont add">
+                &#xe601;
+            </li>
+
+            <li class="ft-st cd iconfont fst">
+                &#xe65c;
+            </li>
+
+            <li class="ft-st cd iconfont chk" on:click={()=>{showVerbose=!showVerbose}}>
+                &#xe65a;
+            </li>
+
+            <li class="ft-st cd iconfont str" on:mouseup={(e)=>{open(e)}}>
+                &#xe60b;
+            </li>
+
+            <li class="ft-st cd iconfont gab" on:mouseup={()=>{del()}}>
+                &#xe654;
+            </li>
         </ul>
-        <ul class="content">
-            {#each testDe as item,index (item.id)}
+        <ul class="content" bind:this={contentAer}>
+            {#each $focus as item,index (item.id)}
                 <li class="ft-st cd"
-                    style="background-color: {toHash(item.color)};"
+                    style="background-color: {item.color};"
                     class:beDrag={item.id===beDragID}
-                    animate:flip={{duration:330}}
+                    animate:flip={{duration:430}}
                     on:mousedown={(e)=>{stall(e,index,item.id)}}
                     in:fade={{duration:330}}>
                     {item.name}
-                    <div class="detail">{item.id}:还没写呢，欸嘿~</div>
+                    {#if showVerbose}
+                        <div class="detail">{item.id}:还没写呢，欸嘿~</div>
+                    {/if}
                 </li>
             {/each}
         </ul>
@@ -231,7 +264,7 @@
                         margin-top: 10px;
 
                         &::after {
-                            content: "开启多选";
+                            content: "详细信息";
                         }
                     }
 
@@ -277,6 +310,7 @@
                 display: flex;
                 flex-wrap: wrap;
                 overflow: auto;
+                position: relative;
 
                 & .ft-st.cd {
                     color: #fff;

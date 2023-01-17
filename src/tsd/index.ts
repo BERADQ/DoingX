@@ -86,3 +86,37 @@ export class BackLog {
 		return temp;
 	}
 }
+
+export class FocusM {
+	positiveTiming: boolean;
+	
+	lengthOfASingleWork: number;
+	lengthOfRest: number;
+	numberOfCycles: number;
+	color: string;
+	name: string;
+	id: string = crypto.randomUUID();
+	
+	static from(obj: {
+		positiveTiming?: boolean,
+		lengthOfASingleWork?: number,
+		lengthOfRest?: number,
+		numberOfCycles?: number,
+		color?: string,
+		name?: string,
+		id?: string,
+	}): FocusM {
+		let temp: FocusM = new FocusM();
+		
+		temp.positiveTiming = obj.positiveTiming ?? false;
+		temp.lengthOfASingleWork = obj.lengthOfASingleWork ?? 40;
+		temp.lengthOfRest = obj.lengthOfRest ?? 10;
+		temp.numberOfCycles = obj.numberOfCycles ?? 2;
+		temp.color = obj.color ?? "#03A9F4";
+		temp.name = obj.name ?? "";
+		temp.id = obj.id ?? crypto.randomUUID();
+		
+		return temp;
+	}
+	
+}

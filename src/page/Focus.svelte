@@ -1,5 +1,10 @@
 <script lang="ts">
 	import {flip} from "svelte/animate";
+	import {fade} from "svelte/transition";
+	import {spring} from 'svelte/motion';
+	import {cubicOut} from "svelte/easing";
+
+	let coords;
 
 	let testDe = [
 		{name: "写作业", color: 0x03A9F4, id: 1},
@@ -19,69 +24,102 @@
 	];
 
 	let beDrag = [];
+	let beDragID: any;
 
 	function toHash(num: number): string {
-		console.log(num);
+		//console.log(num);
 		return `#${num.toString(16).padStart(6, "0")}`;
 	}
 
-	function stall(e: MouseEvent, index: number) {
-		const ele: HTMLLIElement = <HTMLLIElement>e.target;
-		const stEX = ele.getBoundingClientRect().x;
-		const stEY = ele.getBoundingClientRect().y;
-		const stCX = e.clientX;
-		const stCY = e.clientY;
+	let tempAniIn: Function = fade;
 
+	function stall(e: MouseEvent, index: number, id) {
+		const ele: HTMLLIElement = <HTMLLIElement>e.target;
+		const bou = ele.getBoundingClientRect();
+		const stEX = bou.x;
+		const stEY = bou.y;
+		coords = spring({x: stEX + 12, y: stEY + 12}, {stiffness: 0.1, damping: 0.4});
+		//console.log("aaa");
 		let isDrag = false;
 		const tempLis = (em: MouseEvent) => {
-			if (!isDrag && Math.abs(em.movementX * em.movementY) > 2) {
+			if (!isDrag && Math.abs(em.movementX) + Math.abs(em.movementY) > 2) {
+				beDragID = id;
 				isDrag = true;
-				beDrag.push(testDe.splice(index, 1)[0]);
+				const tempitem = testDe.splice(index, 1)[0];
+				tempAniIn = (node, {duration}) => {
+					return {
+						duration,
+						css: t => {
+							const eased = cubicOut(t);
+
+							return `
+                                    width: ${bou.width * .97 * (1 - eased) + 24 * eased}px;
+                                    height: ${bou.height * .97 * (1 - eased) + 24 * eased}px;
+                                    `;
+
+						}
+					};
+				};
+				beDrag.push(tempitem);
 				//console.log(beDrag);
 				testDe = testDe;
 				beDrag = beDrag;
 			}
 			if (isDrag) {
-
+				coords.set({x: em.clientX, y: em.clientY});
 			}
 		};
 		window.addEventListener("mousemove", tempLis);
 		const letGo = () => {
-			if (isDrag) {
+
+			if (isDrag && beDrag.length) {
 				testDe.splice(index, 0, beDrag.splice(0, 1)[0]);
 				testDe = testDe;
 				beDrag = beDrag;
 			}
+			beDragID = null;
+
 			window.removeEventListener("mousemove", tempLis);
 			window.removeEventListener("mouseup", letGo);
 		};
 		window.addEventListener("mouseup", letGo);
 	}
 
+	function del() {
+		if (beDrag.length) {
+			console.log(beDrag[0]);
+			beDrag.pop();
+		}
+	}
 </script>
-
 <div class="main">
-    <ul class="render-layers">
+    <svg class="render-layers">
         {#each beDrag as item (item.id)}
-            <li style="background-color: {toHash(item.color)};" class="ball">
-
-            </li>
+            <rect fill="{toHash(item.color)}"
+                  x="{$coords.x - 12}"
+                  y="{$coords.y - 12}"
+                  rx="12"
+                  ry="12"
+                  class="ball"
+                  in:tempAniIn={{duration: 300}} out:fade={{duration:150}}/>
         {/each}
-    </ul>
+    </svg>
     <div class="mainBox">
         <ul class="control">
             <li class="ft-st cd iconfont add">&#xe601;</li>
             <li class="ft-st cd iconfont fst">&#xe65c;</li>
             <li class="ft-st cd iconfont chk">&#xe65a;</li>
             <li class="ft-st cd iconfont str">&#xe60b;</li>
-            <li class="ft-st cd iconfont gab">&#xe654;</li>
+            <li class="ft-st cd iconfont gab" on:mouseup={()=>{del()}}>&#xe654;</li>
         </ul>
         <ul class="content">
             {#each testDe as item,index (item.id)}
                 <li class="ft-st cd"
                     style="background-color: {toHash(item.color)};"
-                    animate:flip={{duration:200}}
-                    on:mousedown={(e)=>{stall(e,index)}}>
+                    class:beDrag={item.id===beDragID}
+                    animate:flip={{duration:330}}
+                    on:mousedown={(e)=>{stall(e,index,item.id)}}
+                    in:fade={{duration:330}}>
                     {item.name}
                     <div class="detail">{item.id}:还没写呢，欸嘿~</div>
                 </li>
@@ -105,11 +143,11 @@
             left: 0;
             pointer-events: none;
             z-index: 100;
+            filter: drop-shadow(0 0 3px rgba(33, 33, 33, .3));
 
             & .ball {
-                border-radius: 12px;
-                height: 24px;
                 width: 24px;
+                height: 24px;
             }
         }
 
@@ -121,12 +159,10 @@
             height: 100%;
             display: grid;
             gap: 18px;
-            grid-template:
-                        "ten con"
-                        "ten con";
+            grid-template-columns: 1fr 72px;
+            grid-template-areas:"ten con";
 
             & .control {
-                width: 76px;
                 grid-area: con;
                 background-color: #fff;
                 border-radius: var(--mainRadius);
